@@ -1,0 +1,13 @@
+@import "../src/styles.css";
+@import "../src/catalog.css";
+@import "../src/product-experience.css";
+@import "../src/theme.css";
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+}

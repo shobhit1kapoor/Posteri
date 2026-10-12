@@ -1,0 +1,5 @@
+{
+  "crons": [
+    { "path": "/api/cron/printkk", "schedule": "0 9 * * *" }
+  ]
+}

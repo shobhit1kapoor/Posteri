@@ -1,7 +1,10 @@
 node_modules/
 dist/
+.next/
 .vercel/
 outputs/
+.DS_Store
+supabase/.temp/
 .env
 .env.*
 !.env.example
