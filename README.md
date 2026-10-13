@@ -119,6 +119,29 @@ not contact PrintKK or spend the supplier wallet.
 `supabase/migrations/20261012152832_harden_server_only_commerce_tables.sql`
 adds explicit deny policies for browser roles on the payment/fulfillment tables.
 
+### One owner PrintKK wallet test
+
+For a deliberate supplier-wallet test before customer payments are configured,
+the app provides a separate, owner-only page at `/test-printkk`. It is not a
+public checkout bypass: it requires an authenticated Supabase account whose
+email exactly matches `PRINTKK_TEST_ADMIN_EMAIL`, an explicit confirmation
+phrase, and can be submitted only once. The configured test is one copy of the
+smallest currently mapped PrintKK print: **Le Mans · #ZEBRAWIN, 8 × 12 in,
+matte**. It records $0 of customer revenue but PrintKK can charge the supplier
+wallet and ship to the entered address.
+
+To enable it temporarily in Production, set:
+
+```bash
+PRINTKK_MANUAL_TEST_ENABLED=true
+PRINTKK_TEST_ADMIN_EMAIL=owner@example.com
+```
+
+Deploy, sign in as that exact owner account, and visit `/test-printkk`. Disable
+`PRINTKK_MANUAL_TEST_ENABLED` and redeploy immediately after the test. The
+audited migration is
+`supabase/migrations/20261013171911_add_manual_printkk_test_order_source.sql`.
+
 ## Validation
 
 ```bash
