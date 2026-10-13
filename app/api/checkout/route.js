@@ -168,6 +168,18 @@ export async function POST(request) {
   }
 
   if (isDodoCheckoutEnabled()) {
+    // Dodo Payments operates as a Merchant of Record for digital delivery and
+    // expressly excludes physical goods. This storefront fulfills printed
+    // posters through PrintKK, so a live Dodo checkout would misrepresent the
+    // transaction and could put the merchant account and customer funds at
+    // risk. Keep test/dry-run checkout available while a physical-goods
+    // payment processor is connected, but never launch a real Dodo session.
+    if (getDodoCheckoutConfig()?.environment === 'live_mode'
+      && getPrintKKFulfillmentMode() === 'live') {
+      return Response.json({
+        error: 'Live payments need a physical-goods payment processor before printed poster orders can launch.',
+      }, { status: 503 });
+    }
     return startDodoCheckout({ request, ...parsed.data });
   }
 
