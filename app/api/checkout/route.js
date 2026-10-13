@@ -191,7 +191,7 @@ export async function POST(request) {
   const commerceMode = process.env.COMMERCE_MODE ?? 'demo';
   if (process.env.NODE_ENV === 'production' || commerceMode !== 'demo') {
     return Response.json({
-      error: 'Checkout is unavailable until Dodo Payments is configured.',
+      error: 'Checkout for printed posters is not available yet. Dodo Payments supports digital delivery only; a physical-goods payment provider is required.',
     }, { status: 503 });
   }
 
